@@ -1,0 +1,11 @@
+As0 in0 En-1 rn1;
+'set i/o reading argv[1]
+'Aa1 Af1
+'loop
+;r
+    ig
+    i=E r
+    r! r
+    r? ip .
+;
+Af0 ig ic

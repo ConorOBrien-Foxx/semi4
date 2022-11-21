@@ -1,0 +1,66 @@
+'constants
+E n-1       'eof (-1)
+P n43       '+
+M n45       '-
+L n60       '<
+R n62       '>
+O n91       '[
+F n93       ']
+I n44       ',
+D n46       '.
+Q n63       '?
+Z s100--- RUNNING PROGRAM! ---.
+S n30000    'tape size (only used if left ptr underflow)
+' variables
+a s0        'file name
+T s0        'tape
+p n0        'tape ptr
+c n0        'current cell value
+C s0        'code
+q n0        'code ptr
+f n0        'current instruction
+i n0        'input character / temp
+r n1        'reading/running?
+d n0        'depth
+m n1        'mode
+h n1        'code delta
+;
+Zp
+'set tape size
+aa1 af1
+'read code from file
+;r
+    ig
+    i=E!r
+    r? C+i C .
+;
+af0
+'interpretation step
+r$1
+;r    
+    C@q f
+    m? 'eval mode
+        T@p c
+        f=P? c+1c T#pc .
+        f=M? c-1c T#pc .
+        f=L?
+            p-1p
+            p<0? TrS p+Sp .
+        .
+        f=R? p+1p .
+        f=O? c!? d$1 m$0 h$1 ..
+        f=F? c ? d$1 m$0 h$E ..
+        f=I? cg
+            'eof = 0
+            c<0? c$0 .
+            T#pc
+        .
+        f=D? cc .
+        f=Q? cp .
+    : 'skip mode
+        f=F? d-hd .
+        f=O? d+hd .
+        d?: m$1 h$1 .
+    .
+    q+h q
+    Csi q<ir

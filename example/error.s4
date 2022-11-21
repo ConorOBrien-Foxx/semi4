@@ -1,0 +1,5 @@
+E s100Cannot foo a bar presently, sorry!.
+;
+2F 'set output stream to stderr
+Ep 'print p
+1e 'exit 1
